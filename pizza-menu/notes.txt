@@ -1,0 +1,5 @@
+React applications are entirely made out of components.
+
+The building block of React Applications are components.
+
+The component based architecture of a React app makes it very easy to reuse components. 
