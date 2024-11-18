@@ -20,4 +20,4 @@ In React applications, data can only be passed from parents to child components 
 
 There are two ways to approach conditional rendering in React;
 1. Using the ternary operator
-2. Using short-circuiting and logica operators.
+2. Using short-circuiting and logical operators.
