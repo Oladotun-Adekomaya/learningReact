@@ -1,0 +1,3 @@
+State is used to store data that a component can hold over time, necessary information that it needs to remember throughout the app's lifecycle.
+
+State is like a memory for a component
