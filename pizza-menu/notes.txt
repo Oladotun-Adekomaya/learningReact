@@ -17,3 +17,7 @@ And if you feel you need to constantly change data, what you need to use is stat
 React uses a one-way data flow, what this means is that...
 
 In React applications, data can only be passed from parents to child components and this is done useing props.
+
+There are two ways to approach conditional rendering in React;
+1. Using the ternary operator
+2. Using short-circuiting and logica operators.
