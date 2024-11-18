@@ -13,3 +13,7 @@ State is internal data that can be updated by the component's logic.
 Props are read-only, they are immutable. They cannot be changed.
 
 And if you feel you need to constantly change data, what you need to use is state. Bacause states data can be changed with logic.
+
+React uses a one-way data flow, what this means is that...
+
+In React applications, data can only be passed from parents to child components and this is done useing props.
