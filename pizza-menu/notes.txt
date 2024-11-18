@@ -3,3 +3,13 @@ React applications are entirely made out of components.
 The building block of React Applications are components.
 
 The component based architecture of a React app makes it very easy to reuse components. 
+
+Props are used to pass data from parent components to child components down the component tree.
+
+Props is the data comin from the outside, and can only be updated by the parent component.
+
+State is internal data that can be updated by the component's logic.
+
+Props are read-only, they are immutable. They cannot be changed.
+
+And if you feel you need to constantly change data, what you need to use is state. Bacause states data can be changed with logic.
