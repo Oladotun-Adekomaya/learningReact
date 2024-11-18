@@ -18,12 +18,15 @@ export default function App() {
   };
 
   const handleIsOpen = () => {
-    isOpen ? setIsOpen(false) : setIsOpen(true);
+    // isOpen ? setIsOpen(false) : setIsOpen(true);
+    setIsOpen(!isOpen);
   };
 
   return (
     <>
-      <button onClick={handleIsOpen}>Yoo</button>
+      <button className="close" onClick={handleIsOpen}>
+        &times;
+      </button>
       {isOpen ? (
         <div className="steps">
           <div className="numbers">
