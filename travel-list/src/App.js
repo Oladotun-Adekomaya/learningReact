@@ -13,18 +13,18 @@ export default function App() {
 
   const handleAddItems = (item) => setItems([...items, item]);
 
-  const handleRemoveItems = (item) => {
+  const handleDeleteItems = (id) => {
     const newItems = items.filter((curItem) => {
-      return curItem.id !== item.id;
+      return curItem.id !== id;
     });
-    console.log(newItems);
+    setItems(newItems);
   };
 
   return (
     <div className="app">
       <Logo />
       <Form onAddItems={handleAddItems} />
-      <PackingList items={items} onRemoveItems={handleRemoveItems} />
+      <PackingList items={items} onDeleteItems={handleDeleteItems} />
       <Stats />
     </div>
   );
@@ -77,13 +77,13 @@ function Form({ onAddItems }) {
   );
 }
 
-function PackingList({ items, onRemoveItems }) {
+function PackingList({ items, onDeleteItems }) {
   return (
     <div className="list">
       <ul>
         {items.map((item) => {
           return (
-            <Item item={item} key={item.id} onRemoveItems={onRemoveItems} />
+            <Item item={item} key={item.id} onDeleteItems={onDeleteItems} />
           );
         })}
       </ul>
@@ -91,17 +91,14 @@ function PackingList({ items, onRemoveItems }) {
   );
 }
 
-function Item({ item, onRemoveItems }) {
-  const handleClickClose = () => {
-    onRemoveItems(item);
-  };
-
+function Item({ item, onDeleteItems }) {
   return (
     <li>
+      <input type="checkbox" name="" id="" />
       <span style={item.packed ? { textDecoration: "line-through" } : {}}>
         {item.quantity} {item.description}
       </span>
-      <button style={{ color: "red" }} onClick={handleClickClose}>
+      <button style={{ color: "red" }} onClick={() => onDeleteItems(item.id)}>
         &times;
       </button>
     </li>
