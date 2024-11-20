@@ -1,7 +1,8 @@
 import { useState } from "react";
-import Logo from "./Logo";
-import Form from "./Form";
-import { PackingList } from "./PackingList";
+import Logo from "./components/Logo";
+import Form from "./components/Form";
+import PackingList from "./components/PackingList";
+import Stats from "./components/Stats";
 
 export default function App() {
   const [items, setItems] = useState([]);
@@ -42,61 +43,5 @@ export default function App() {
       />
       <Stats items={items} />
     </div>
-  );
-}
-
-export function Item({ item, onDeleteItems, onToggleCheck }) {
-  const [packedVar, setPacked] = useState(false);
-
-  const handleIsPacked = (e) => {
-    setPacked(e.target.checked);
-    onToggleCheck(item.id, !packedVar);
-  };
-
-  return (
-    <li>
-      <input
-        type="checkbox"
-        name="checkbox"
-        id="checkbox"
-        value={item.packed}
-        onChange={handleIsPacked}
-      />
-      <span style={item.packed ? { textDecoration: "line-through" } : {}}>
-        {item.quantity} {item.description}
-      </span>
-      <button style={{ color: "red" }} onClick={() => onDeleteItems(item.id)}>
-        &times;
-      </button>
-    </li>
-  );
-}
-
-function Stats({ items }) {
-  const numItems = items.length;
-  const packedItems = items.reduce((accumulator, item) => {
-    return item.packed === true ? (accumulator += 1) : accumulator;
-  }, 0);
-  const percentagePacked = Math.round((packedItems / numItems) * 100);
-
-  if (numItems === 0) {
-    return (
-      <footer className="stats">
-        <em> Add an item to the list.</em>
-      </footer>
-    );
-  }
-
-  return (
-    <footer className="stats">
-      {percentagePacked !== 100 ? (
-        <em>
-          You have {numItems} items on your list, and you already packed{" "}
-          {packedItems} {`(${percentagePacked}%)`}
-        </em>
-      ) : (
-        <em>You are ready to go</em>
-      )}
-    </footer>
   );
 }
