@@ -21,6 +21,13 @@ export default function App() {
     setItems(newItems);
   };
 
+  const handleDeleteAllItems = () => {
+    const confirmed = window.confirm(
+      "Are you sure ou want to delete all items"
+    );
+    if (confirmed) setItems([]);
+  };
+
   const handleToggleCheck = (id, packedVariable) => {
     const updatedItems = items.map((item) =>
       item.id === id ? { ...item, packed: packedVariable } : item
@@ -36,6 +43,7 @@ export default function App() {
         items={items}
         onDeleteItems={handleDeleteItems}
         onToggleCheck={handleToggleCheck}
+        onDeleteAllItems={handleDeleteAllItems}
       />
       <Stats items={items} />
     </div>
@@ -89,7 +97,12 @@ function Form({ onAddItems }) {
   );
 }
 
-function PackingList({ items, onDeleteItems, onToggleCheck }) {
+function PackingList({
+  items,
+  onDeleteItems,
+  onToggleCheck,
+  onDeleteAllItems,
+}) {
   const [sortValue, setSortValue] = useState("chronological");
   const sortItems = items;
   const sortAlphabeticalItems = sortItems
@@ -130,6 +143,7 @@ function PackingList({ items, onDeleteItems, onToggleCheck }) {
           <option value="alphabetical">Sort Alphabetically</option>
           <option value="bypacked"> Sort by Packed</option>
         </select>
+        <button onClick={onDeleteAllItems}>Clear List</button>
       </div>
     </div>
   );
