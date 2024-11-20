@@ -99,6 +99,7 @@ function Item({ item, onDeleteItems }) {
         name="checkbox"
         id="checkbox"
         value={item.packed}
+        onChange = {()}
       />
       <span style={item.packed ? { textDecoration: "line-through" } : {}}>
         {item.quantity} {item.description}
