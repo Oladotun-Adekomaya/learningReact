@@ -10,6 +10,7 @@ const initialItems = [
 
 export default function App() {
   const [items, setItems] = useState([]);
+  // const [packed, setPacked ] = useState(false)
 
   const handleAddItems = (item) => setItems([...items, item]);
 
@@ -20,11 +21,26 @@ export default function App() {
     setItems(newItems);
   };
 
+  const handleToggleCheck = (id, packedVariable) => {
+    // console.log(packedVariable);
+    const updatedItems = items.map((item) =>
+      item.id === id ? { ...item, packed: packedVariable } : item
+    );
+    console.log(updatedItems);
+    setItems(updatedItems);
+  };
+
+  let numItems = items.l;
+
   return (
     <div className="app">
       <Logo />
       <Form onAddItems={handleAddItems} />
-      <PackingList items={items} onDeleteItems={handleDeleteItems} />
+      <PackingList
+        items={items}
+        onDeleteItems={handleDeleteItems}
+        onToggleCheck={handleToggleCheck}
+      />
       <Stats />
     </div>
   );
@@ -77,13 +93,18 @@ function Form({ onAddItems }) {
   );
 }
 
-function PackingList({ items, onDeleteItems }) {
+function PackingList({ items, onDeleteItems, onToggleCheck }) {
   return (
     <div className="list">
       <ul>
         {items.map((item) => {
           return (
-            <Item item={item} key={item.id} onDeleteItems={onDeleteItems} />
+            <Item
+              item={item}
+              key={item.id}
+              onDeleteItems={onDeleteItems}
+              onToggleCheck={onToggleCheck}
+            />
           );
         })}
       </ul>
@@ -91,7 +112,15 @@ function PackingList({ items, onDeleteItems }) {
   );
 }
 
-function Item({ item, onDeleteItems }) {
+function Item({ item, onDeleteItems, onToggleCheck }) {
+  const [packedVar, setPacked] = useState(false);
+
+  const handleIsPacked = (e) => {
+    console.log(e.target.checked);
+    setPacked(e.target.checked);
+    onToggleCheck(item.id, !packedVar);
+  };
+
   return (
     <li>
       <input
@@ -99,7 +128,7 @@ function Item({ item, onDeleteItems }) {
         name="checkbox"
         id="checkbox"
         value={item.packed}
-        onChange = {()}
+        onChange={handleIsPacked}
       />
       <span style={item.packed ? { textDecoration: "line-through" } : {}}>
         {item.quantity} {item.description}
