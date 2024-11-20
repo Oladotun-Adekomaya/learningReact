@@ -22,15 +22,11 @@ export default function App() {
   };
 
   const handleToggleCheck = (id, packedVariable) => {
-    // console.log(packedVariable);
     const updatedItems = items.map((item) =>
       item.id === id ? { ...item, packed: packedVariable } : item
     );
-    console.log(updatedItems);
     setItems(updatedItems);
   };
-
-  let numItems = items.l;
 
   return (
     <div className="app">
@@ -41,7 +37,7 @@ export default function App() {
         onDeleteItems={handleDeleteItems}
         onToggleCheck={handleToggleCheck}
       />
-      <Stats />
+      <Stats items={items} />
     </div>
   );
 }
@@ -94,6 +90,50 @@ function Form({ onAddItems }) {
 }
 
 function PackingList({ items, onDeleteItems, onToggleCheck }) {
+  const [sortValue, setSortValue] = useState("chronological");
+  const sortItems = items;
+  const sortAlphabeticalItems = sortItems
+    .slice()
+    .sort((a, b) => String(a.description).localeCompare(String(b.description)));
+  const sortPackedItems = sortItems.slice().sort((a, b) => (a.packed ? 1 : -1));
+
+  let check =
+    sortValue === "chronological"
+      ? sortItems
+      : sortValue === "alphabetical"
+      ? sortAlphabeticalItems
+      : sortPackedItems;
+  console.log(check);
+
+  return (
+    <div className="list">
+      <ul>
+        {check.map((item) => {
+          return (
+            <Item
+              item={item}
+              key={item.id}
+              onDeleteItems={onDeleteItems}
+              onToggleCheck={onToggleCheck}
+            />
+          );
+        })}
+      </ul>
+      <div className="actions">
+        <select
+          name=""
+          id=""
+          value={sortValue}
+          onChange={(e) => setSortValue(e.target.value)}
+        >
+          <option value="chronological">Sort by Item Added</option>
+          <option value="alphabetical">Sort Alphabetically</option>
+          <option value="bypacked"> Sort by Packed</option>
+        </select>
+      </div>
+    </div>
+  );
+
   return (
     <div className="list">
       <ul>
@@ -108,6 +148,18 @@ function PackingList({ items, onDeleteItems, onToggleCheck }) {
           );
         })}
       </ul>
+      <div className="actions">
+        <select
+          name=""
+          id=""
+          value={sortValue}
+          onChange={(e) => setSortValue(e.target.value)}
+        >
+          <option value="chronological">Sort by Item Added</option>
+          <option value="alphabetical">Sort Alphabetically</option>
+          <option value="bypacked"> Sort by Packed</option>
+        </select>
+      </div>
     </div>
   );
 }
@@ -116,7 +168,6 @@ function Item({ item, onDeleteItems, onToggleCheck }) {
   const [packedVar, setPacked] = useState(false);
 
   const handleIsPacked = (e) => {
-    console.log(e.target.checked);
     setPacked(e.target.checked);
     onToggleCheck(item.id, !packedVar);
   };
@@ -140,10 +191,31 @@ function Item({ item, onDeleteItems, onToggleCheck }) {
   );
 }
 
-function Stats() {
+function Stats({ items }) {
+  const numItems = items.length;
+  const packedItems = items.reduce((accumulator, item) => {
+    return item.packed === true ? (accumulator += 1) : accumulator;
+  }, 0);
+  const percentagePacked = Math.round((packedItems / numItems) * 100);
+
+  if (numItems === 0) {
+    return (
+      <footer className="stats">
+        <em> Add an item to the list.</em>
+      </footer>
+    );
+  }
+
   return (
     <footer className="stats">
-      <em>You have X items on your list, and you already packed X (X%)</em>
+      {percentagePacked !== 100 ? (
+        <em>
+          You have {numItems} items on your list, and you already packed{" "}
+          {packedItems} {`(${percentagePacked}%)`}
+        </em>
+      ) : (
+        <em>You are ready to go</em>
+      )}
     </footer>
   );
 }
