@@ -61,51 +61,51 @@ import { useState } from "react";
 //   );
 // }
 
-export default function App() {
-  const [count, setCount] = useState(0);
-  const [step, setStep] = useState(0);
-  const [day, setDay] = useState("sunday");
-  const daysOfTheWeek = [
-    "sunday",
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday",
-  ];
+// export default function App() {
+//   const [count, setCount] = useState(0);
+//   const [step, setStep] = useState(0);
+//   const [day, setDay] = useState("sunday");
+//   const daysOfTheWeek = [
+//     "sunday",
+//     "monday",
+//     "tuesday",
+//     "wednesday",
+//     "thursday",
+//     "friday",
+//     "saturday",
+//   ];
 
-  const handleCountIncrease = () => {
-    setCount((count) => (count += step + 1));
-  };
+//   const handleCountIncrease = () => {
+//     setCount((count) => (count += step + 1));
+//   };
 
-  const handleCountDecrease = () => {
-    setCount((count) => (count -= step + 1));
-  };
+//   const handleCountDecrease = () => {
+//     setCount((count) => (count -= step + 1));
+//   };
 
-  const handleStepIncrease = () => {
-    setStep((step) => (step += 1));
-  };
+//   const handleStepIncrease = () => {
+//     setStep((step) => (step += 1));
+//   };
 
-  const handleStepDecrease = () => {
-    if (step > 0) setStep((step) => (step -= 1));
-  };
-  return (
-    <div>
-      <p>
-        <button onClick={handleStepDecrease}>-</button>
-        <span>Step :{step}</span>{" "}
-        <button onClick={handleStepIncrease}>+</button>
-      </p>
+//   const handleStepDecrease = () => {
+//     if (step > 0) setStep((step) => (step -= 1));
+//   };
+//   return (
+//     <div>
+//       <p>
+//         <button onClick={handleStepDecrease}>-</button>
+//         <span>Step :{step}</span>{" "}
+//         <button onClick={handleStepIncrease}>+</button>
+//       </p>
 
-      <p>
-        <button onClick={handleCountDecrease}>-</button>{" "}
-        <span>Count :{count}</span>{" "}
-        <button onClick={handleCountIncrease}>+</button>
-      </p>
-      <p>
-        {} days from today is {} {} 2027
-      </p>
-    </div>
-  );
-}
+//       <p>
+//         <button onClick={handleCountDecrease}>-</button>{" "}
+//         <span>Count :{count}</span>{" "}
+//         <button onClick={handleCountIncrease}>+</button>
+//       </p>
+//       <p>
+//         {} days from today is {} {} 2027
+//       </p>
+//     </div>
+//   );
+// }
