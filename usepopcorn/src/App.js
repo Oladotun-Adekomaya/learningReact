@@ -63,12 +63,7 @@ export default function App() {
 
       <main className="main">
         <div className="box">
-          <button
-            className="btn-toggle"
-            onClick={() => setIsOpen1((open) => !open)}
-          >
-            {isOpen1 ? "–" : "+"}
-          </button>
+          <ToggleButton setIsOpen={setIsOpen1} isOpen={isOpen1}></ToggleButton>
 
           {isOpen1 && (
             <ul className="list">
@@ -81,12 +76,7 @@ export default function App() {
 
         <div className="box">
           <WatchedMoviesSummary watched={watched}></WatchedMoviesSummary>
-          <button
-            className="btn-toggle"
-            onClick={() => setIsOpen2((open) => !open)}
-          >
-            {isOpen2 ? "–" : "+"}
-          </button>
+          <ToggleButton setIsOpen={setIsOpen2} isOpen={isOpen2}></ToggleButton>
           {isOpen2 && (
             <>
               <ul className="list">
@@ -188,5 +178,13 @@ function WatchedMoviesList({ movie }) {
         </p>
       </div>
     </li>
+  );
+}
+
+function ToggleButton({ setIsOpen, isOpen }) {
+  return (
+    <button className="btn-toggle" onClick={() => setIsOpen((open) => !open)}>
+      {isOpen ? "–" : "+"}
+    </button>
   );
 }
