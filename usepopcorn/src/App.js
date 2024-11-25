@@ -56,7 +56,11 @@ export default function App() {
 
   return (
     <>
-      <Navbar movies={movies}></Navbar>
+      <Navbar>
+        <Logo />
+        <Search />
+        <NumResults movies={movies} />
+      </Navbar>
       <Main>
         <Box>
           <MovieList movies={movies} />
@@ -119,14 +123,8 @@ function MovieList({ movies }) {
   );
 }
 
-function Navbar({ movies }) {
-  return (
-    <nav className="nav-bar">
-      <Logo />
-      <Search />
-      <NumResults />
-    </nav>
-  );
+function Navbar({ children }) {
+  return <nav className="nav-bar">{children}</nav>;
 }
 
 function Logo() {
@@ -152,10 +150,10 @@ function Search() {
   );
 }
 
-function NumResults() {
+function NumResults({ movies }) {
   return (
     <p className="num-results">
-      Found <strong>X</strong> results
+      Found <strong>{movies.length}</strong> results
     </p>
   );
 }
