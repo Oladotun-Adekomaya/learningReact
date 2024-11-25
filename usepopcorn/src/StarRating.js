@@ -1,22 +1,30 @@
 import { useState } from "react";
 
-const containerStyle = {
-  display: "flex",
-  alignItems: "center",
-  gap: "16px",
-};
+export default function StarRating({
+  maxRating = 5,
+  color = "#fcc419",
+  size = 48,
+  className = "",
+  messages = [],
+  defaultRating = 0,
+}) {
+  const textStyle = {
+    lineHeight: "1",
+    margin: "0",
+    fontSize: `${size / (3 / 2)}px`,
+  };
 
-const starContainerStyle = {
-  display: "flex",
-  //   gap: "4px",
-};
+  const containerStyle = {
+    display: "flex",
+    alignItems: "center",
+    gap: "16px",
+  };
 
-const textStyle = {
-  lineHeight: "1",
-  margin: "0",
-};
+  const starContainerStyle = {
+    display: "flex",
+    //   gap: "4px",
+  };
 
-export default function StarRating({ maxRating = 5 }) {
   const [rating, setRating] = useState(0);
 
   const [tempRating, setTempRating] = useState(0);
