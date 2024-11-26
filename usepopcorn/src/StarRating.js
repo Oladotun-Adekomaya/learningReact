@@ -36,14 +36,28 @@ export default function StarRating({
   return (
     <div style={containerStyle}>
       <div style={starContainerStyle}>
-        {Array.from({ length: maxRating }, (el, i) => (
-          <Star
-            onRate={() => setRating(i + 1)}
-            full={tempRating ? tempRating >= i + 1 : rating >= i + 1}
-            onHover={() => setTempRating(i + 1)}
-            onHoverEnd={() => setTempRating(0)}
-          />
-        ))}
+        {Array.from({ length: maxRating }, (el, i) => {
+          const full = tempRating ? tempRating >= i + 1 : rating >= i + 1;
+          return (
+            <Star>
+              {full ? (
+                <FullStar
+                  onRate={() => setRating(i + 1)}
+                  onHover={() => setTempRating(i + 1)}
+                  onHoverEnd={() => setTempRating(0)}
+                  color={color}
+                />
+              ) : (
+                <EmptyStar
+                  onRate={() => setRating(i + 1)}
+                  onHover={() => setTempRating(i + 1)}
+                  onHoverEnd={() => setTempRating(0)}
+                  color={color}
+                />
+              )}
+            </Star>
+          );
+        })}
       </div>
       <p style={textStyle}> {tempRating || rating || ""} </p>
     </div>
@@ -57,12 +71,8 @@ const starStyle = {
   cursor: "pointer",
 };
 
-function Star({ onRate, full, onHover, onHoverEnd }) {
-  return full ? (
-    <FullStar onRate={onRate} onHover={onHover} onHoverEnd={onHoverEnd} />
-  ) : (
-    <EmptyStar onRate={onRate} onHover={onHover} onHoverEnd={onHoverEnd} />
-  );
+function Star({ onRate, full, onHover, onHoverEnd, children }) {
+  return { children };
 }
 
 function FullStar({ onRate, onHover, onHoverEnd }) {
