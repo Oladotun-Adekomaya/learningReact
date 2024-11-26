@@ -96,7 +96,11 @@ export default function App() {
   );
 
   const handleSelectMovie = (id) => {
-    setSelectedId(id);
+    setSelectedId((selectedId) => (id === selectedId ? null : id));
+  };
+
+  const handleCloseMovie = () => {
+    setSelectedId(null);
   };
 
   return (
@@ -110,14 +114,17 @@ export default function App() {
         <Box>
           {isLoading && <Loader />}
           {!isLoading && !error && (
-            <MovieList movies={movies} on={handleSelectMovie} />
+            <MovieList movies={movies} onSelectMovie={handleSelectMovie} />
           )}
           {error && <ErrorMessage errorMessage={error} />}
         </Box>
 
         <Box>
           {selectedId ? (
-            <MovieDetails id={selectedId} />
+            <MovieDetails
+              selectedId={selectedId}
+              onCloseMovie={handleCloseMovie}
+            />
           ) : (
             <>
               <WatchedMoviesSummary watched={watched} />
@@ -146,8 +153,74 @@ function Box({ children }) {
   );
 }
 
-function MovieDetails({ id }) {
-  return <div className="details"> {id}</div>;
+function MovieDetails({ selectedId, onCloseMovie }) {
+  const [movie, setMovie] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const {
+    Title: title,
+    Year: year,
+    Poster: poster,
+    Runtime: runtime,
+    imdbRating,
+    Plot: plot,
+    Released: released,
+    Actors: actors,
+    Director: director,
+    Genre: genre,
+  } = movie;
+
+  useEffect(
+    function () {
+      async function fetchMovieDetails() {
+        setIsLoading(true);
+        const url = `https://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        setMovie(data);
+        setIsLoading(false);
+      }
+      fetchMovieDetails();
+    },
+
+    [selectedId]
+  );
+
+  return (
+    <div className="details">
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <header>
+            <button className="btn-back" onClick={onCloseMovie}>
+              &larr;
+            </button>
+            <img src={poster} alt={`Poster of ${movie} movie`} />
+            <div className="details-overview">
+              <h2>{title}</h2>
+              <p>
+                {released} &bull; {runtime}
+              </p>
+              <p>{genre}</p>
+              <p>
+                <span>⭐</span>
+                {imdbRating} IMDB rating
+              </p>
+            </div>
+          </header>
+
+          <section>
+            <div className="rating"></div>
+            <p>
+              <em>{plot}</em>
+            </p>
+            <p>Starring {actors}</p>
+            <p>Directed by {director}</p>
+          </section>
+        </>
+      )}
+    </div>
+  );
 }
 
 function Loader() {
@@ -184,14 +257,14 @@ function WatchedList({ watched }) {
   );
 }
 
-function MovieList({ movies, onClick }) {
+function MovieList({ movies, onSelectMovie }) {
   return (
-    <ul className="list">
+    <ul className="list list-movies">
       {movies?.map((movie) => (
         <MovieForBox1
           movie={movie}
           key={movie.imdbID}
-          onClick={onClick}
+          onClick={onSelectMovie}
         ></MovieForBox1>
       ))}
     </ul>
