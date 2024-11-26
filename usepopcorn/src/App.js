@@ -59,6 +59,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
+  const [selectedId, setSelectedId] = useState(null);
 
   useEffect(
     function () {
@@ -94,6 +95,10 @@ export default function App() {
     [query]
   );
 
+  const handleSelectMovie = (id) => {
+    setSelectedId(id);
+  };
+
   return (
     <>
       <Navbar>
@@ -104,13 +109,21 @@ export default function App() {
       <Main>
         <Box>
           {isLoading && <Loader />}
-          {!isLoading && !error && <MovieList movies={movies} />}
+          {!isLoading && !error && (
+            <MovieList movies={movies} on={handleSelectMovie} />
+          )}
           {error && <ErrorMessage errorMessage={error} />}
         </Box>
 
         <Box>
-          <WatchedMoviesSummary watched={watched} />
-          <WatchedList watched={watched} />
+          {selectedId ? (
+            <MovieDetails id={selectedId} />
+          ) : (
+            <>
+              <WatchedMoviesSummary watched={watched} />
+              <WatchedList watched={watched} />
+            </>
+          )}
         </Box>
       </Main>
     </>
@@ -131,6 +144,10 @@ function Box({ children }) {
       {isOpen1 && children}
     </div>
   );
+}
+
+function MovieDetails({ id }) {
+  return <div className="details"> {id}</div>;
 }
 
 function Loader() {
@@ -167,11 +184,15 @@ function WatchedList({ watched }) {
   );
 }
 
-function MovieList({ movies }) {
+function MovieList({ movies, onClick }) {
   return (
     <ul className="list">
       {movies?.map((movie) => (
-        <MovieForBox1 movie={movie} key={movie.imdbID}></MovieForBox1>
+        <MovieForBox1
+          movie={movie}
+          key={movie.imdbID}
+          onClick={onClick}
+        ></MovieForBox1>
       ))}
     </ul>
   );
@@ -210,9 +231,9 @@ function NumResults({ movies }) {
   );
 }
 
-function MovieForBox1({ movie }) {
+function MovieForBox1({ movie, onClick }) {
   return (
-    <li key={movie.imdbID}>
+    <li key={movie.imdbID} onClick={() => onClick(movie.imdbID)}>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
       <h3>{movie.Title}</h3>
       <div>
