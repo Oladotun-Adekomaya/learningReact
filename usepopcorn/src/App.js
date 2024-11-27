@@ -57,7 +57,7 @@ const average = (arr) =>
 
 export default function App() {
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState();
+  const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
@@ -106,7 +106,14 @@ export default function App() {
   };
 
   const handleAddWatched = (movie) => {
-    setWatched((watched) => [...watched, movie]);
+    if (!watched.find((m) => movie.imdbID === m.imdbID)) {
+      setWatched((watched) => [...watched, movie]);
+    }
+  };
+
+  const handleRemoveWatched = (movieId) => {
+    const watchedList = watched.filter((movie) => movie.imdbID !== movieId);
+    console.log(watchedList);
   };
 
   return (
@@ -131,6 +138,7 @@ export default function App() {
               selectedId={selectedId}
               onCloseMovie={handleCloseMovie}
               onAddWatched={handleAddWatched}
+              watched={watched}
             />
           ) : (
             <>
@@ -160,9 +168,11 @@ function Box({ children }) {
   );
 }
 
-function MovieDetails({ selectedId, onCloseMovie, onAddWatched }) {
+function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [isWatched, setIsWatched] = useState(false);
+  const [userRating, setUserRating] = useState("");
   const {
     Title: title,
     Year: year,
@@ -175,6 +185,10 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched }) {
     Director: director,
     Genre: genre,
   } = movie;
+
+  const watchedUserRating = watched.find(
+    (movie) => movie.imdbID === selectedId
+  )?.userRating;
 
   useEffect(
     function () {
@@ -192,9 +206,35 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched }) {
     [selectedId]
   );
 
+  useEffect(
+    function () {
+      watched.find((m) => selectedId === m.imdbID)
+        ? setIsWatched(true)
+        : setIsWatched(false);
+    },
+    [selectedId]
+  );
+
   function handleAdd() {
-    const newWatchedMovie = {};
+    const newWatchedMovie = {
+      imdbID: selectedId,
+      title,
+      year,
+      poster,
+      imdbRating: Number(imdbRating),
+      runtime: runtime.split(" ").at(0),
+      userRating,
+    };
     onAddWatched(newWatchedMovie);
+    setIsWatched(true);
+    onCloseMovie();
+    handleIsWatched();
+  }
+
+  function handleIsWatched() {
+    watched.find((m) => selectedId === m.imdbID)
+      ? setIsWatched(true)
+      : setIsWatched(false);
   }
 
   return (
@@ -222,13 +262,29 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched }) {
           </header>
 
           <section>
-            <div className="rating">
-              <StarRating size={25} maxRating={10} />
+            {!isWatched && (
+              <div className="rating">
+                <StarRating
+                  size={25}
+                  maxRating={10}
+                  onSetRating={setUserRating}
+                />
 
-              <button className="btn-add" onClick={handleAdd}>
-                Add to list
-              </button>
-            </div>
+                {userRating > 0 && (
+                  <button className="btn-add" onClick={handleAdd}>
+                    Add to list
+                  </button>
+                )}
+              </div>
+            )}
+
+            {isWatched && (
+              <div className="rating">
+                <p>
+                  You rated this movie {watchedUserRating} <span>⭐</span>{" "}
+                </p>
+              </div>
+            )}
             <p>
               <em>{plot}</em>
             </p>
@@ -282,7 +338,7 @@ function MovieList({ movies, onSelectMovie }) {
         <MovieForBox1
           movie={movie}
           key={movie.imdbID}
-          onClick={onSelectMovie}
+          onSelectMovie={onSelectMovie}
         ></MovieForBox1>
       ))}
     </ul>
@@ -322,9 +378,9 @@ function NumResults({ movies }) {
   );
 }
 
-function MovieForBox1({ movie, onClick }) {
+function MovieForBox1({ movie, onSelectMovie }) {
   return (
-    <li key={movie.imdbID} onClick={() => onClick(movie.imdbID)}>
+    <li key={movie.imdbID} onClick={() => onSelectMovie(movie.imdbID)}>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
       <h3>{movie.Title}</h3>
       <div>
@@ -370,8 +426,8 @@ function WatchedMoviesSummary({ watched }) {
 function WatchedMovies({ movie }) {
   return (
     <li key={movie.imdbID}>
-      <img src={movie.Poster} alt={`${movie.Title} poster`} />
-      <h3>{movie.Title}</h3>
+      <img src={movie.poster} alt={`${movie.title} poster`} />
+      <h3>{movie.title}</h3>
       <div>
         <p>
           <span>⭐️</span>
