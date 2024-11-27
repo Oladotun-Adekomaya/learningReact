@@ -393,7 +393,7 @@ function MovieForBox1({ movie, onSelectMovie }) {
       <div>
         <p>
           <span>🗓</span>
-          {/* <span>{movie.Year}</span> */}
+          <span>{movie.Year}</span>
         </p>
       </div>
     </li>
