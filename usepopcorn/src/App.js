@@ -112,8 +112,8 @@ export default function App() {
   };
 
   const handleRemoveWatched = (movieId) => {
-    const watchedList = watched.filter((movie) => movie.imdbID !== movieId);
-    console.log(watchedList);
+    const newWatchedList = watched.filter((movie) => movie.imdbID !== movieId);
+    setWatched(newWatchedList);
   };
 
   return (
@@ -143,7 +143,10 @@ export default function App() {
           ) : (
             <>
               <WatchedMoviesSummary watched={watched} />
-              <WatchedList watched={watched} />
+              <WatchedList
+                watched={watched}
+                onRemoveWatched={handleRemoveWatched}
+              />
             </>
           )}
         </Box>
@@ -321,11 +324,15 @@ function ErrorMessage({ errorMessage }) {
 //   );
 // }
 
-function WatchedList({ watched }) {
+function WatchedList({ watched, onRemoveWatched }) {
   return (
     <ul className="list">
       {watched.map((movie) => (
-        <WatchedMovies movie={movie} key={movie.imdbID} />
+        <WatchedMovies
+          movie={movie}
+          key={movie.imdbID}
+          onRemoveWatched={onRemoveWatched}
+        />
       ))}
     </ul>
   );
@@ -408,22 +415,22 @@ function WatchedMoviesSummary({ watched }) {
         </p>
         <p>
           <span>⭐️</span>
-          <span>{avgImdbRating}</span>
+          <span>{avgImdbRating.toFixed(2)}</span>
         </p>
         <p>
           <span>🌟</span>
-          <span>{avgUserRating}</span>
+          <span>{avgUserRating.toFixed(2)}</span>
         </p>
         <p>
           <span>⏳</span>
-          <span>{avgRuntime} min</span>
+          <span>{avgRuntime.toFixed(2)} min</span>
         </p>
       </div>
     </div>
   );
 }
 
-function WatchedMovies({ movie }) {
+function WatchedMovies({ movie, onRemoveWatched }) {
   return (
     <li key={movie.imdbID}>
       <img src={movie.poster} alt={`${movie.title} poster`} />
@@ -441,6 +448,13 @@ function WatchedMovies({ movie }) {
           <span>⏳</span>
           <span>{movie.runtime} min</span>
         </p>
+
+        <button
+          className="btn-delete"
+          onClick={() => onRemoveWatched(movie.imdbID)}
+        >
+          X
+        </button>
       </div>
     </li>
   );
