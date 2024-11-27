@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import StarRating from "./StarRating";
+
 const tempMovieData = [
   {
     imdbID: "tt1375666",
@@ -55,7 +57,7 @@ const average = (arr) =>
 
 export default function App() {
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [watched, setWatched] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
@@ -103,6 +105,10 @@ export default function App() {
     setSelectedId(null);
   };
 
+  const handleAddWatched = (movie) => {
+    setWatched((watched) => [...watched, movie]);
+  };
+
   return (
     <>
       <Navbar>
@@ -124,6 +130,7 @@ export default function App() {
             <MovieDetails
               selectedId={selectedId}
               onCloseMovie={handleCloseMovie}
+              onAddWatched={handleAddWatched}
             />
           ) : (
             <>
@@ -153,7 +160,7 @@ function Box({ children }) {
   );
 }
 
-function MovieDetails({ selectedId, onCloseMovie }) {
+function MovieDetails({ selectedId, onCloseMovie, onAddWatched }) {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -185,6 +192,11 @@ function MovieDetails({ selectedId, onCloseMovie }) {
     [selectedId]
   );
 
+  function handleAdd() {
+    const newWatchedMovie = {};
+    onAddWatched(newWatchedMovie);
+  }
+
   return (
     <div className="details">
       {isLoading ? (
@@ -210,7 +222,13 @@ function MovieDetails({ selectedId, onCloseMovie }) {
           </header>
 
           <section>
-            <div className="rating"></div>
+            <div className="rating">
+              <StarRating size={25} maxRating={10} />
+
+              <button className="btn-add" onClick={handleAdd}>
+                Add to list
+              </button>
+            </div>
             <p>
               <em>{plot}</em>
             </p>
