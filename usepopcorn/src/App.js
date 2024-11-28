@@ -110,15 +110,6 @@ export default function App() {
     [query]
   );
 
-  useEffect(function () {
-    document.addEventListener("keydown", function (e) {
-      if (e.code === "Escape") {
-        handleCloseMovie();
-        console.log("Closing");
-      }
-    });
-  }, []);
-
   const handleSelectMovie = (id) => {
     setSelectedId((selectedId) => (id === selectedId ? null : id));
   };
@@ -251,6 +242,18 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
       };
     },
     [title]
+  );
+
+  useEffect(
+    function () {
+      document.addEventListener("keydown", function (e) {
+        if (e.code === "Escape") {
+          onCloseMovie();
+          console.log("Closing");
+        }
+      });
+    },
+    [onCloseMovie]
   );
 
   function handleAdd() {
