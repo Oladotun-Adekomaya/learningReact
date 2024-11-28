@@ -86,7 +86,7 @@ export default function App() {
           setError("");
           setIsLoading(false);
         } catch (err) {
-          console.error(err.message);
+          // console.error(err.message);
           if (err.name !== "AbortError") {
             setError(err.message);
           }
@@ -109,6 +109,15 @@ export default function App() {
     },
     [query]
   );
+
+  useEffect(function () {
+    document.addEventListener("keydown", function (e) {
+      if (e.code === "Escape") {
+        handleCloseMovie();
+        console.log("Closing");
+      }
+    });
+  }, []);
 
   const handleSelectMovie = (id) => {
     setSelectedId((selectedId) => (id === selectedId ? null : id));
