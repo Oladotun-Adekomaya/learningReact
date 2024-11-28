@@ -70,6 +70,7 @@ export default function App() {
       async function fetchMovies() {
         try {
           setIsLoading(true);
+          setError("");
 
           const url = `https://www.omdbapi.com/?apikey=${KEY}&s=${query}`;
 
@@ -82,6 +83,7 @@ export default function App() {
           if (data.Response === "False") throw new Error(data.Error);
 
           setMovies(data.Search);
+          setError("");
           setIsLoading(false);
         } catch (err) {
           console.error(err.message);
