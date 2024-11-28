@@ -65,17 +65,21 @@ export default function App() {
 
   useEffect(
     function () {
+      const controller = new AbortController();
+
       async function fetchMovies() {
         try {
           setIsLoading(true);
+
           const url = `https://www.omdbapi.com/?apikey=${KEY}&s=${query}`;
-          const res = await fetch(url);
+
+          const res = await fetch(url, { signal: controller.signal });
 
           if (!res.ok) throw new Error("Failed To Fetch");
 
           const data = await res.json();
 
-          if (data.Response === "False") throw new Error("Movie Not Found");
+          if (data.Response === "False") throw new Error(data.Error);
 
           setMovies(data.Search);
           setIsLoading(false);
@@ -93,6 +97,10 @@ export default function App() {
       }
 
       fetchMovies();
+
+      return function () {
+        controller.abort();
+      };
     },
     [query]
   );
