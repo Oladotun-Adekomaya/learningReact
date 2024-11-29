@@ -1,11 +1,12 @@
 // `https://api.frankfurter.app/latest?amount=100&from=EUR&to=USD`
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function App() {
   const [baseCurrency, setBaseCurrency] = useState("USD");
   const [foreignCurrency, setForeignCurrency] = useState("EUR");
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(10);
+  const [returnedValue, setreturnedValue]
 
   console.log("base currency:", baseCurrency);
   console.log("foreign currency:", foreignCurrency);
@@ -14,6 +15,19 @@ export default function App() {
   function handleChangeCurrency(setterFunc, value) {
     setterFunc(value);
   }
+
+  const api = `https://api.frankfurter.app/latest?amount=${amount}&from=${baseCurrency}&to=${foreignCurrency}`;
+
+  useEffect(function () {
+    async function fetchExchangeRate() {
+      const res = await fetch(api);
+      const data = await res.json();
+      const ratesObject = data.rates;
+      const value = Object.values(rate);
+      console.log(keys);
+    }
+    fetchExchangeRate();
+  }, []);
 
   return (
     <div>
