@@ -3,8 +3,8 @@
 import { useState } from "react";
 
 export default function App() {
-  const [baseCurrency, setBaseCurrency] = useState("");
-  const [foreignCurrency, setForeignCurrency] = useState("");
+  const [baseCurrency, setBaseCurrency] = useState("USD");
+  const [foreignCurrency, setForeignCurrency] = useState("EUR");
 
   console.log("base currency:", baseCurrency);
   console.log("foreign currency:", foreignCurrency);
@@ -18,7 +18,7 @@ export default function App() {
       <input type="text" />
       <select
         onChange={(e) => handleChangeCurrency(setBaseCurrency, e.target.value)}
-        value="USD"
+        defaultValue="USD"
       >
         <option value="USD">USD</option>
         <option value="EUR">EUR</option>
@@ -29,7 +29,7 @@ export default function App() {
         onChange={(e) =>
           handleChangeCurrency(setForeignCurrency, e.target.value)
         }
-        value="EUR"
+        defaultValue="EUR"
       >
         <option value="USD">USD</option>
         <option value="EUR">EUR</option>
