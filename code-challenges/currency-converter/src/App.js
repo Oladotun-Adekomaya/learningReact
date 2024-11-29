@@ -4,7 +4,7 @@ export default function App() {
   return (
     <div>
       <input type="text" />
-      <select onChange={(e) => console.log(e.target.value)} value="USD">
+      <select onChange={(e) => console.log(e.target.value)}>
         <option value="USD">USD</option>
         <option value="EUR">EUR</option>
         <option value="CAD">CAD</option>
