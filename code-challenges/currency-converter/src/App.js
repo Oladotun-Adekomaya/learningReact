@@ -5,9 +5,11 @@ import { useState } from "react";
 export default function App() {
   const [baseCurrency, setBaseCurrency] = useState("USD");
   const [foreignCurrency, setForeignCurrency] = useState("EUR");
+  const [amount, setAmount] = useState(0);
 
   console.log("base currency:", baseCurrency);
   console.log("foreign currency:", foreignCurrency);
+  console.log(amount);
 
   function handleChangeCurrency(setterFunc, value) {
     setterFunc(value);
@@ -15,7 +17,7 @@ export default function App() {
 
   return (
     <div>
-      <input type="text" />
+      <input type="text" onChange={(e) => setAmount(e.target.value)} />
       <select
         onChange={(e) => handleChangeCurrency(setBaseCurrency, e.target.value)}
         defaultValue="USD"
