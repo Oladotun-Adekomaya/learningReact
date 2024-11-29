@@ -29,9 +29,9 @@ export default function App() {
         const value = Object.values(rates);
         setreturnedValue(value[0]);
       }
-      fetchExchangeRate();
+      if (amount > 0) fetchExchangeRate();
     },
-    [amount]
+    [amount, api]
   );
 
   return (
@@ -57,7 +57,7 @@ export default function App() {
         <option value="CAD">CAD</option>
         <option value="INR">INR</option>
       </select>
-      <p>OUTPUT: {returnedValue}</p>
+      <p>{returnedValue}</p>
     </div>
   );
 }
