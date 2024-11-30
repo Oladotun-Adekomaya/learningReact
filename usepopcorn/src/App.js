@@ -70,9 +70,9 @@ export default function App() {
     setSelectedId((selectedId) => (id === selectedId ? null : id));
   };
 
-  const handleCloseMovie = () => {
+  function handleCloseMovie() {
     setSelectedId(null);
-  };
+  }
 
   const handleAddWatched = (movie) => {
     if (!watched.find((m) => movie.imdbID === m.imdbID)) {
