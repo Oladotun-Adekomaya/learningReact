@@ -5,6 +5,10 @@ export function useMovies() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const handleCloseMovie = () => {
+    setSelectedId(null);
+  };
+
   useEffect(
     function () {
       const controller = new AbortController();

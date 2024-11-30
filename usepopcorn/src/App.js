@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import StarRating from "./StarRating";
+import { useMovies } from "./useMovies";
 
 const tempMovieData = [
   {
@@ -85,6 +86,8 @@ export default function App() {
     const newWatchedList = watched.filter((movie) => movie.imdbID !== movieId);
     setWatched(newWatchedList);
   };
+
+  useMovies(query);
 
   useEffect(
     function () {
