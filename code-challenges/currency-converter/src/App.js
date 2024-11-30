@@ -21,15 +21,32 @@ export default function App() {
 
   useEffect(
     function () {
+      const controller = new AbortController();
+
       async function fetchExchangeRate() {
-        const res = await fetch(api);
-        const data = await res.json();
-        console.log(data);
-        const rates = data.rates;
-        const value = Object.values(rates);
-        setreturnedValue(value[0]);
+        try {
+          const res = await fetch(api, { signal: controller.signal });
+          const data = await res.json();
+          console.log(data);
+          const rates = data.rates;
+          const value = Object.values(rates);
+          setreturnedValue(value[0]);
+        } catch (err) {
+          if (err.name !== "AbortError") {
+            console.log(err.message);
+          }
+        } finally {
+        }
       }
-      if (amount > 0) fetchExchangeRate();
+      if (amount > 0 && baseCurrency !== foreignCurrency) fetchExchangeRate();
+      if (foreignCurrency === baseCurrency) {
+        setreturnedValue(amount);
+      }
+
+      return function () {
+        controller.abort();
+        setreturnedValue(0);
+      };
     },
     [amount, api]
   );
