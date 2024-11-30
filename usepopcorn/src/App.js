@@ -278,7 +278,12 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
     [onCloseMovie]
   );
 
-  useEffect(function () {}, [userRating]);
+  useEffect(
+    function () {
+      if (userRating) countRef.current = countRef.current + 1;
+    },
+    [userRating]
+  );
 
   function handleAdd() {
     const newWatchedMovie = {
@@ -289,6 +294,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
       imdbRating: Number(imdbRating),
       runtime: runtime.split(" ").at(0),
       userRating,
+      countRatingDecisions: countRef.current,
     };
     onAddWatched(newWatchedMovie);
     setIsWatched(true);
@@ -443,7 +449,7 @@ function Search({ query, setQuery }) {
         }
       }
 
-      // document.addEventListener("keyword", callback);
+      document.addEventListener("keyword", () => inputEl.current.focus());
 
       return () => document.addEventListener("keydown", callback);
     },
