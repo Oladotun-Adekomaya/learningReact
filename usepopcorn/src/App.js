@@ -51,6 +51,7 @@ const tempWatchedData = [
 ];
 
 const tempQuery = "interstellar";
+const KEY = "19dafbc6";
 
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
