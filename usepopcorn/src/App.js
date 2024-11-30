@@ -204,6 +204,9 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isWatched, setIsWatched] = useState(false);
   const [userRating, setUserRating] = useState("");
+
+  const countRef = useRef(0);
+
   const {
     Title: title,
     Year: year,
@@ -274,6 +277,8 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
     },
     [onCloseMovie]
   );
+
+  useEffect(function () {}, [userRating]);
 
   function handleAdd() {
     const newWatchedMovie = {
@@ -425,22 +430,25 @@ function Logo() {
 function Search({ query, setQuery }) {
   const inputEl = useRef(null);
 
-  useEffect(function () {
-    function callback(e) {
-      if (document.activeElement === inputEl.current) {
-        return;
+  useEffect(
+    function () {
+      function callback(e) {
+        if (document.activeElement === inputEl.current) {
+          return;
+        }
+
+        if (e.code === "Enter") {
+          inputEl.current.focus();
+          setQuery("");
+        }
       }
 
-      if (e.code === "Enter") {
-        inputEl.current.focus();
-        setQuery("");
-      }
-    }
+      // document.addEventListener("keyword", callback);
 
-    // document.addEventListener("keyword", callback);
-
-    return () => document.addEventListener("keydown", callback);
-  }, []);
+      return () => document.addEventListener("keydown", callback);
+    },
+    [setQuery]
+  );
 
   return (
     <input
