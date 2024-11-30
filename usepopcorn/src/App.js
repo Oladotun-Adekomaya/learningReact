@@ -449,7 +449,7 @@ function Search({ query, setQuery }) {
         }
       }
 
-      document.addEventListener("keyword", () => inputEl.current.focus());
+      document.addEventListener("keyword", callback);
 
       return () => document.addEventListener("keydown", callback);
     },
