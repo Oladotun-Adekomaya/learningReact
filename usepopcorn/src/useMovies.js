@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 
-export function useMovies() {
+const KEY = "19dafbc6";
+
+export function useMovies(query) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleCloseMovie = () => {
-    setSelectedId(null);
-  };
+  //   const handleCloseMovie = () => {
+  //     setSelectedId(null);
+  //   };
 
   useEffect(
     function () {
@@ -47,7 +49,7 @@ export function useMovies() {
         return;
       }
 
-      handleCloseMovie();
+      //   handleCloseMovie();
       fetchMovies();
 
       return function () {
@@ -56,4 +58,6 @@ export function useMovies() {
     },
     [query]
   );
+
+  return { movies, isLoading, error };
 }

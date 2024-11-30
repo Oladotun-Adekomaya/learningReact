@@ -50,7 +50,6 @@ const tempWatchedData = [
   },
 ];
 
-const KEY = "19dafbc6";
 const tempQuery = "interstellar";
 
 const average = (arr) =>
@@ -87,7 +86,7 @@ export default function App() {
     setWatched(newWatchedList);
   };
 
-  useMovies(query);
+  const { movies, isLoading, error } = useMovies(query);
 
   useEffect(
     function () {
