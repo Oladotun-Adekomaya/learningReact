@@ -26,10 +26,14 @@ function useGeolocation() {
       }
     );
   }
+
+  return { getPosition, isLoading, error, lat, lng };
 }
 
 export default function App() {
   const [countClicks, setCountClicks] = useState(0);
+
+  const { getPosition, isLoading, error, lat, lng } = useGeolocation();
 
   return (
     <div>
