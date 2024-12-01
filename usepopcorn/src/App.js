@@ -379,25 +379,6 @@ function Search({ query, setQuery }) {
     setQuery("");
   });
 
-  useEffect(
-    function () {
-      function callback(e) {
-        if (e.code === "Enter") {
-          if (document.activeElement === inputEl.current) {
-            return;
-          }
-          inputEl.current.focus();
-          setQuery("");
-        }
-      }
-
-      document.addEventListener("keyword", callback);
-
-      // return () => document.addEventListener("keydown", callback);
-    },
-    [setQuery]
-  );
-
   return (
     <input
       className="search"
