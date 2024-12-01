@@ -211,7 +211,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
     [title]
   );
 
-  useKey();
+  useKey("escape", onCloseMovie);
 
   useEffect(
     function () {
