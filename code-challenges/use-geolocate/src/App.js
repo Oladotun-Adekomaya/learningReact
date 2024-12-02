@@ -35,9 +35,14 @@ export default function App() {
 
   const { getPosition, isLoading, error, lat, lng } = useGeolocation();
 
+  function handleClick() {
+    setCountClicks((count) => count + 1);
+    getPosition();
+  }
+
   return (
     <div>
-      <button onClick={getPosition} disabled={isLoading}>
+      <button onClick={handleClick} disabled={isLoading}>
         Get my position
       </button>
 
