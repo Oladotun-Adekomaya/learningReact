@@ -2,6 +2,20 @@ import { useState, useReducer } from "react";
 
 function reducer(state, action) {
   console.log(state, action);
+
+  switch (action.type) {
+    case "dec":
+      return { ...state, count: state.count - 1 };
+    case "inc":
+      return { ...state, count: state.count + 1 };
+
+    case "setCount":
+      return { ...state, count: action.payload };
+
+    default:
+      throw new Error("Unknown action");
+  }
+
   // if (action.type === "inc") return state + action.payload;
   // if (action.type === "dec") return state + action.payload;
   // if (action.type === "setCount") return action.payload;
