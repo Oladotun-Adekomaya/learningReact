@@ -3,6 +3,7 @@ import Header from "./Header";
 import Main from "./Main";
 import Loader from "./Loader";
 import Error from "./Error";
+import StartScreen from "./StartScreen";
 
 const initialState = {
   questions: [],
@@ -32,6 +33,8 @@ export default function App() {
 
   const { questions, status } = state;
 
+  const numQuestions = questions.length;
+
   useEffect(function () {
     fetch("http://localhost:9000/questions")
       .then((res) => res.json())
@@ -46,7 +49,7 @@ export default function App() {
       <Main>
         {status === "loading" && <Loader />}
         {status === "error" && <Error />}
-        {/* {status === "ready" && < />} */}
+        {status === "ready" && <StartScreen numQuestions={numQuestions} />}
       </Main>
     </div>
   );
