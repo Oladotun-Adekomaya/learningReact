@@ -59,7 +59,7 @@ function reducer(state, action) {
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const { questions, status, index, answer } = state;
+  const { questions, status, index, answer, points } = state;
 
   const numQuestions = questions.length;
 
@@ -89,7 +89,7 @@ export default function App() {
               answer={answer}
             />
 
-            <NextButton dispatch={dispatch} answer={answer} />
+            <NextButton dispatch={dispatch} answer={answer} points={points} />
           </>
         )}
       </Main>
