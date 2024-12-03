@@ -68,7 +68,11 @@ function reducer(state, action) {
       };
 
     case "tick":
-      return { ...state, secondsRemaining: state.secondsRemaining - 1 };
+      return {
+        ...state,
+        secondsRemaining: state.secondsRemaining - 1,
+        status: "finished",
+      };
 
     default:
       throw new Error("Action Unknown");
@@ -78,7 +82,15 @@ function reducer(state, action) {
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const { questions, status, index, answer, points, highscore } = state;
+  const {
+    questions,
+    status,
+    index,
+    answer,
+    points,
+    highscore,
+    secondsRemaining,
+  } = state;
 
   const numQuestions = questions.length;
 
@@ -120,7 +132,7 @@ export default function App() {
             />
 
             <Footer>
-              <Timer dispatch={dispatch} />
+              <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} />
               <NextButton
                 dispatch={dispatch}
                 answer={answer}
