@@ -21,6 +21,7 @@ const initialState = {
   answer: null,
   points: 0,
   highscore: 0,
+  secondsRemaining: 10,
 };
 
 function reducer(state, action) {
@@ -65,6 +66,9 @@ function reducer(state, action) {
         highscore:
           state.points > state.highscore ? state.points : state.highscore,
       };
+
+    case "tick":
+      return { ...state, secondsRemaining: state.secondsRemaining - 1 };
 
     default:
       throw new Error("Action Unknown");
@@ -116,7 +120,7 @@ export default function App() {
             />
 
             <Footer>
-              <Timer />
+              <Timer dispatch={dispatch} />
               <NextButton
                 dispatch={dispatch}
                 answer={answer}
