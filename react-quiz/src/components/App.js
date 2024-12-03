@@ -67,10 +67,18 @@ function reducer(state, action) {
           state.points > state.highscore ? state.points : state.highscore,
       };
 
+    case "restart":
+      return {
+        ...initialState,
+        questions: state.questions,
+        status: "ready",
+      };
+
     case "tick":
       return {
         ...state,
         secondsRemaining: state.secondsRemaining - 1,
+        status: state.secondsRemaining === 0 ? "finished" : state.status,
       };
 
     default:
