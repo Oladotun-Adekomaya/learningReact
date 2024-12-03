@@ -1,4 +1,4 @@
-function NextButton() {
+function NextButton({ dispatch, answer }) {
   return <div></div>;
 }
 

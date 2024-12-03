@@ -87,7 +87,7 @@ export default function App() {
               answer={answer}
             />
 
-            <NextButton dispatch={dispatch} />
+            <NextButton dispatch={dispatch} answer={answer} />
           </>
         )}
       </Main>
