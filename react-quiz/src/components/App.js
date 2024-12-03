@@ -46,6 +46,9 @@ function reducer(state, action) {
             : state.points,
       };
 
+    case "nextQuestion":
+      return { ...state, index: state.index + 1 };
+
     default:
       throw new Error("Action Unknown");
   }
@@ -76,11 +79,15 @@ export default function App() {
           <StartScreen numQuestions={numQuestions} dispatch={dispatch} />
         )}
         {status === "active" && (
-          <Question
-            question={questions[index]}
-            dispatch={dispatch}
-            answer={answer}
-          />
+          <>
+            <Question
+              question={questions[index]}
+              dispatch={dispatch}
+              answer={answer}
+            />
+
+            <NextButton dispatch={dispatch} />
+          </>
         )}
       </Main>
     </div>
