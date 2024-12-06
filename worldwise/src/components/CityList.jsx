@@ -1,7 +1,7 @@
 import styles from "./CityList.module.css";
 
 function CityList() {
-  return <ul style={styles.cityList}>LIST</ul>;
+  return <ul className={styles.cityList}>LIST</ul>;
 }
 
 export default CityList;
