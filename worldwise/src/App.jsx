@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 const BASE_URL = "http://localhost:3000";
 
 function App() {
-  const [cities, setCities] = useState({});
+  const [cities, setCities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(function () {
