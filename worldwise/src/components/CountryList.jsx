@@ -1,9 +1,9 @@
-import styles from "./CountriesList.module.css";
+import styles from "./CountryList.module.css";
 import Spinner from "./Spinner";
 import CityItem from "./CityItem";
 import Message from "./Message";
 
-function CityList({ isLoading, cities }) {
+function CountryList({ isLoading, cities }) {
   if (isLoading) return <Spinner />;
 
   if (!cities.length)
@@ -20,4 +20,4 @@ function CityList({ isLoading, cities }) {
   );
 }
 
-export default CityList;
+export default CountryList;
