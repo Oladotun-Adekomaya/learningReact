@@ -11,7 +11,9 @@ function CountryList({ isLoading, cities }) {
       <Message message="Add your first city by clicking on a city in the map" />
     );
 
-  const countries = [];
+  const countries = cities.reduce((arr,city) =>{
+    if(arr.map(el => ))
+  },[]);
 
   return (
     <ul className={styles.countryList}>
