@@ -73,7 +73,8 @@ function App() {
 }
 
 function Header() {
-  useContext(PostContext);
+  // 3) Consuming the context value
+  const { onClearPosts } = useContext(PostContext);
 
   return (
     <header>
@@ -89,7 +90,8 @@ function Header() {
   );
 }
 
-function SearchPosts({ searchQuery, setSearchQuery }) {
+function SearchPosts() {
+  const { searchQuery, setSearchQuery } = useContext(PostContext);
   return (
     <input
       value={searchQuery}
@@ -99,7 +101,8 @@ function SearchPosts({ searchQuery, setSearchQuery }) {
   );
 }
 
-function Results({ posts }) {
+function Results() {
+  const { posts } = useContext(PostContext);
   return <p>🚀 {posts.length} atomic posts found</p>;
 }
 
