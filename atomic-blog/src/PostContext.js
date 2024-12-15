@@ -47,3 +47,5 @@ function PostProvider() {
     ></PostContext.Provider>
   );
 }
+
+export default PostProvider;
