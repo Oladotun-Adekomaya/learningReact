@@ -8,9 +8,6 @@ function createRandomPost() {
   };
 }
 
-// 1) CREATE A CONTEXT
-const PostContext = createContext();
-
 function App() {
   const [posts, setPosts] = useState(() =>
     Array.from({ length: 30 }, () => createRandomPost())
