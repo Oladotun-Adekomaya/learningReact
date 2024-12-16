@@ -12,30 +12,7 @@ import CountryList from "./components/CountryList";
 import City from "./components/City";
 import Form from "./components/Form";
 
-const BASE_URL = "http://localhost:3000";
-
 function App() {
-  const [cities, setCities] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(function () {
-    async function fetchCities() {
-      try {
-        setIsLoading(true);
-        const res = await fetch(`${BASE_URL}/cities`); // , { mode: "no-cors" }
-        const data = await res.json();
-        setCities(data);
-      } catch (e) {
-        alert("There was an error");
-        console.error(e);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchCities();
-  }, []);
-
   return (
     <BrowserRouter>
       <Routes>
