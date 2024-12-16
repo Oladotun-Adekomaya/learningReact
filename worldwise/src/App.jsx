@@ -15,39 +15,35 @@ import { CitiesProvider, useCities } from "./contexts/CitiesContext";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* <Route path="/" element={<HomePage />} /> */}
+    <CitiesProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* <Route path="/" element={<HomePage />} /> */}
 
-        <Route index element={<HomePage />} />
+          <Route index element={<HomePage />} />
 
-        <Route path="pricing" element={<Pricing />} />
+          <Route path="pricing" element={<Pricing />} />
 
-        <Route path="product" element={<Product />} />
+          <Route path="product" element={<Product />} />
 
-        <Route path="login" element={<Login />} />
+          <Route path="login" element={<Login />} />
 
-        <Route path="app" element={<AppLayout />}>
-          <Route index element={<Navigate to="cities" replace />}></Route>
+          <Route path="app" element={<AppLayout />}>
+            <Route index element={<Navigate to="cities" replace />}></Route>
 
-          <Route
-            path="cities"
-            element={<CityList cities={cities} isLoading={isLoading} />}
-          ></Route>
+            <Route path="cities" element={<CityList />}></Route>
 
-          <Route path="cities/:id" element={<City />}></Route>
+            <Route path="cities/:id" element={<City />}></Route>
 
-          <Route
-            path="countries"
-            element={<CountryList cities={cities} isLoading={isLoading} />}
-          ></Route>
+            <Route path="countries" element={<CountryList />}></Route>
 
-          <Route path="form" element={<Form />}></Route>
-        </Route>
+            <Route path="form" element={<Form />}></Route>
+          </Route>
 
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-    </BrowserRouter>
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </CitiesProvider>
   );
 }
 
